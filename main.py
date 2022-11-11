@@ -5,6 +5,10 @@ cell_size = 10
 grid_x = 70
 grid_y = 70
 
+color_alive = (0, 100, 10)
+color_dead = (20, 20, 20)
+color_grid = (30, 30, 30)
+
 pygame.init()
 screen = pygame.display.set_mode((grid_x * cell_size, grid_y * cell_size))
 
@@ -17,7 +21,7 @@ grid[pos[0]:pos[0]+start_pattern.shape[0], pos[1]:pos[1]+start_pattern.shape[1]]
 pos = (10, 10)
 grid[pos[0]:pos[0]+start_pattern.shape[0], pos[1]:pos[1]+start_pattern.shape[1]] = start_pattern
 
-screen.fill((30, 30, 30))
+screen.fill(color_grid)
 
 def update(surface, grid, cell_size):
     new_grid = numpy.zeros((grid.shape[0], grid.shape[1]))
@@ -27,9 +31,9 @@ def update(surface, grid, cell_size):
 
         if (grid[x, y] == 1 and 2 <= neighborhood <= 3) or (grid[x, y] == 0 and neighborhood == 3):
             new_grid[x, y] = 1
-            color = (0, 100, 10)
+            color = color_alive
 
-        color = color if grid[x, y] == 1 else (20, 20, 20)
+        color = color if grid[x, y] == 1 else color_dead
         pygame.draw.rect(surface, color, (y*cell_size, x*cell_size, cell_size-1, cell_size-1))
 
     return new_grid
