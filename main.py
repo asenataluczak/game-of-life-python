@@ -73,12 +73,12 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if grid_y*cell_size/2-control_panel_y/2 <= mouse[0] <= grid_y*cell_size/2-control_panel_y/2+50 and 0 <= mouse[1] <= 50:
+            if buttonPlayPause.collide(mouse):
                 updating = not updating
-            if 200 <= mouse[0] <= 250 and 0 <= mouse[1] <= 50:
+            if buttonRefresh.collide(mouse):
                 grid = init_grid()
                 grid = update(screen, grid, cell_size)
-            if 600 <= mouse[0] <= 650 and 0 <= mouse[1] <= 50:
+            if buttonNext.collide(mouse):
                 grid = update(screen, grid, cell_size)
 
     if updating:
