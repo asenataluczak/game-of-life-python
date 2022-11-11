@@ -3,9 +3,12 @@ import numpy
 from button import Button
 
 cell_size = 10
+button_size = 50
 grid_x = 70
 grid_y = 70
 control_panel_y = 50
+screen_width = grid_x * cell_size
+screen_height = grid_y * cell_size + control_panel_y
 
 color_alive = (0, 100, 10)
 color_dead = (20, 20, 20)
@@ -14,18 +17,19 @@ color_button = (255, 255, 255)
 
 pygame.init()
 screen = pygame.display.set_mode(
-    (grid_x * cell_size, grid_y * cell_size + control_panel_y))
+    (screen_width, screen_height))
 screen.fill(color_grid)
 
 icon_refresh = pygame.image.load('assets/refresh_icon.svg').convert_alpha()
 icon_play = pygame.image.load('assets/play_icon.svg').convert_alpha()
 icon_pause = pygame.image.load('assets/pause_icon.svg').convert_alpha()
 icon_next = pygame.image.load('assets/next_icon.svg').convert_alpha()
-buttonRefresh = Button(200, 0, (color_button, color_grid, color_dead),
+button_center = screen_width / 2 - button_size / 2
+buttonRefresh = Button(button_center - button_size - 20, 0, button_size, (color_button, color_grid, color_dead),
                        icon_refresh)
-buttonPlayPause = Button(400, 0, (color_button, color_grid, color_dead),
+buttonPlayPause = Button(button_center, 0, button_size, (color_button, color_grid, color_dead),
                          icon_play, icon_pause)
-buttonNext = Button(600, 0, (color_button, color_grid, color_dead),
+buttonNext = Button(button_center + button_size + 20, 0, button_size, (color_button, color_grid, color_dead),
                     icon_next)
 Button.draw(buttonRefresh, screen)
 Button.draw(buttonPlayPause, screen)

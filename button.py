@@ -4,10 +4,10 @@ import pygame
 
 class Button:
 
-    def __init__(self, x, y, colors: Tuple[Tuple[int,int,int]], icon, backup_icon=""):
+    def __init__(self, x, y, size, colors: Tuple[Tuple[int,int,int]], icon, backup_icon=""):
         self.x = x
         self.y = y
-        self.size = 50
+        self.size = size
         self.main_color = colors[0]
         self.background_color = colors[1]
         self.hover_color = colors[2]
