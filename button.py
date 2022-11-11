@@ -17,11 +17,23 @@ class Button:
     def draw(self, surface):
         pygame.draw.rect(surface, self.main_color,
                          (self.x, self.y, self.size, self.size), self.size, 5)
-        pygame.draw.rect(surface, self.background_color,
-                         (self.x+2, self.y+2, self.size-4, self.size-4), self.size-4, 5)
+        self._draw_background(surface)
         surface.blit(self.icon, (self.x, self.y))
         if (self.backup_icon):
             print('Switch')
 
     def collide(self, mouse):
         return self.x <= mouse[0] <= self.x + self.size and self.y <= mouse[1] <= self.y + self.size
+
+    def switch(self, surface, switched=False):
+        self._draw_background(surface)
+        if(switched and self.backup_icon):
+            surface.blit(self.backup_icon, (self.x, self.y))
+        else:
+            surface.blit(self.icon, (self.x, self.y))
+
+    def _draw_background(self, surface):
+        pygame.draw.rect(surface, self.background_color,
+                         (self.x+2, self.y+2, self.size-4, self.size-4), self.size-4, 5)
+
+

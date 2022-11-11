@@ -75,6 +75,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if buttonPlayPause.collide(mouse):
                 updating = not updating
+                buttonPlayPause.switch(screen, updating)
             if buttonRefresh.collide(mouse):
                 grid = init_grid()
                 grid = update(screen, grid, cell_size)
