@@ -1,5 +1,6 @@
 import pygame
 import numpy
+from button import Button
 
 cell_size = 10
 grid_x = 70
@@ -9,14 +10,27 @@ control_panel_y = 50
 color_alive = (0, 100, 10)
 color_dead = (20, 20, 20)
 color_grid = (30, 30, 30)
+color_button = (255, 255, 255)
 
 pygame.init()
-screen = pygame.display.set_mode((grid_x * cell_size, grid_y * cell_size + control_panel_y))
+screen = pygame.display.set_mode(
+    (grid_x * cell_size, grid_y * cell_size + control_panel_y))
 screen.fill(color_grid)
 
-buttonStart = pygame.draw.rect(screen, (100,255,0),(grid_y*cell_size/2-control_panel_y/2,0,50, 50))
-buttonRefresh = pygame.draw.rect(screen, (10,10,255),(200,0,50, 50))
-buttonNext = pygame.draw.rect(screen, (150,150,0),(600,0,50, 50))
+icon_refresh = pygame.image.load('assets/refresh_icon.svg').convert_alpha()
+icon_play = pygame.image.load('assets/play_icon.svg').convert_alpha()
+icon_pause = pygame.image.load('assets/pause_icon.svg').convert_alpha()
+icon_next = pygame.image.load('assets/next_icon.svg').convert_alpha()
+buttonRefresh = Button(200, 0, (color_button, color_grid, color_dead),
+                       icon_refresh)
+buttonPlayPause = Button(400, 0, (color_button, color_grid, color_dead),
+                         icon_play, icon_pause)
+buttonNext = Button(600, 0, (color_button, color_grid, color_dead),
+                    icon_next)
+Button.draw(buttonRefresh, screen)
+Button.draw(buttonPlayPause, screen)
+Button.draw(buttonNext, screen)
+
 
 def init_grid():
     grid = numpy.zeros((grid_y, grid_x))
@@ -41,9 +55,11 @@ def update(surface, grid, cell_size):
             color = color_alive
 
         color = color if grid[x, y] == 1 else color_dead
-        pygame.draw.rect(surface, color, (x*cell_size, y*cell_size+control_panel_y, cell_size-1, cell_size-1))
+        pygame.draw.rect(surface, color, (x*cell_size, y *
+                         cell_size+control_panel_y, cell_size-1, cell_size-1))
 
     return new_grid
+
 
 grid = init_grid()
 grid = update(screen, grid, cell_size)
@@ -67,7 +83,7 @@ while running:
 
     if updating:
         grid = update(screen, grid, cell_size)
-    
+
     pygame.display.update()
 
 pygame.quit()
