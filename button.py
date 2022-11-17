@@ -19,8 +19,6 @@ class Button:
                          (self.x, self.y, self.size, self.size), self.size, 5)
         self._draw_background(surface)
         surface.blit(self.icon, (self.x, self.y))
-        if (self.backup_icon):
-            print('Switch')
 
     def collide(self, mouse):
         return self.x <= mouse[0] <= self.x + self.size and self.y <= mouse[1] <= self.y + self.size
