@@ -80,10 +80,12 @@ while running:
             if buttonPlayPause.collide(mouse):
                 updating = not updating
                 buttonPlayPause.switch(screen, updating)
-            if buttonRefresh.collide(mouse):
+                buttonRefresh.disableEnable(screen, updating)
+                buttonNext.disableEnable(screen, updating)
+            if buttonRefresh.collide(mouse) and not updating:
                 grid = init_grid()
                 grid = update(screen, grid, cell_size)
-            if buttonNext.collide(mouse):
+            if buttonNext.collide(mouse) and not updating:
                 grid = update(screen, grid, cell_size)
 
     if updating:

@@ -4,7 +4,7 @@ import pygame
 
 class Button:
 
-    def __init__(self, x, y, size, colors: Tuple[Tuple[int,int,int]], icon, backup_icon=""):
+    def __init__(self, x, y, size, colors: Tuple[Tuple[int, int, int]], icon, backup_icon=""):
         self.x = x
         self.y = y
         self.size = size
@@ -25,13 +25,21 @@ class Button:
 
     def switch(self, surface, switched=False):
         self._draw_background(surface)
-        if(switched and self.backup_icon):
+        if (switched and self.backup_icon):
             surface.blit(self.backup_icon, (self.x, self.y))
         else:
             surface.blit(self.icon, (self.x, self.y))
 
+    def disableEnable(self, surface, disabled):
+        if (disabled):
+            cover = pygame.Surface((self.size, self.size))
+            cover.set_alpha(100)
+            cover.fill((0, 0, 0))
+            surface.blit(cover, (self.x, self.y))
+        else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+            self.draw(surface)
+
     def _draw_background(self, surface):
         pygame.draw.rect(surface, self.background_color,
                          (self.x+2, self.y+2, self.size-4, self.size-4), self.size-4, 5)
-
-
