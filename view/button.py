@@ -37,7 +37,6 @@ class Button:
             cover.fill((0, 0, 0))
             surface.blit(cover, (self.x, self.y))
         else:
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
             self.draw(surface)
 
     def __draw_background(self, surface):
