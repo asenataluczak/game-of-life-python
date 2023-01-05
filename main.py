@@ -40,15 +40,21 @@ def init_grid():
     grid = numpy.zeros((grid_y, grid_x))
     start_pattern = numpy.array([[1, 0, 0],
                                  [1, 1, 1],
-                                 [0, 1, 0]])
+                                 [0, 1, 0]]).transpose()
     pos = (30, 30)
     grid[pos[0]:pos[0]+start_pattern.shape[0], pos[1]:pos[1]+start_pattern.shape[1]] = start_pattern
     pos = (10, 10)
     grid[pos[0]:pos[0]+start_pattern.shape[0], pos[1]:pos[1]+start_pattern.shape[1]] = start_pattern
     return grid
 
+def draw_cells(surface):
+    for x, y in numpy.ndindex(grid.shape):
+        color = color_alive if grid[x, y] == 1 else color_dead
+        pygame.draw.rect(surface, color, (x*cell_size, y *
+                         cell_size+control_panel_y, cell_size-1, cell_size-1))
 
-def update(surface, grid, cell_size):
+
+def update(grid):
     new_grid = numpy.zeros((grid.shape[0], grid.shape[1]))
 
     for x, y in numpy.ndindex(grid.shape):
@@ -56,17 +62,11 @@ def update(surface, grid, cell_size):
 
         if (grid[x, y] == 1 and 2 <= neighborhood <= 3) or (grid[x, y] == 0 and neighborhood == 3):
             new_grid[x, y] = 1
-            color = color_alive
-
-        color = color if grid[x, y] == 1 else color_dead
-        pygame.draw.rect(surface, color, (x*cell_size, y *
-                         cell_size+control_panel_y, cell_size-1, cell_size-1))
-
     return new_grid
 
 
 grid = init_grid()
-grid = update(screen, grid, cell_size)
+draw_cells(screen)
 
 updating = False
 running = True
@@ -84,12 +84,14 @@ while running:
                 buttonNext.disableEnable(screen, updating)
             if buttonRefresh.collide(mouse) and not updating:
                 grid = init_grid()
-                grid = update(screen, grid, cell_size)
+                draw_cells(screen)
             if buttonNext.collide(mouse) and not updating:
-                grid = update(screen, grid, cell_size)
+                grid = update(grid)
+                draw_cells(screen)
 
     if updating:
-        grid = update(screen, grid, cell_size)
+        grid = update(grid)
+        draw_cells(screen)
 
     pygame.display.update()
 
