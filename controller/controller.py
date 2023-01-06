@@ -8,8 +8,8 @@ class Controller:
         self.model = model
         self.updating = False
         self.running = True
+        self.mouse = None
         self.view.draw_cells(model.grid, numpy.ndindex(model.grid.shape))
-
 
     def update_screen(self):
         self.view.update_screen()
@@ -35,15 +35,14 @@ class Controller:
             if self.view.buttonPlayPause.collide(self.mouse):
                 self.updating = not self.updating
                 self.view.buttonPlayPause.switch(self.view.get_surface(), self.updating)
-                self.view.buttonRefresh.disableEnable(self.view.get_surface(), self.updating)
-                self.view.buttonNext.disableEnable(self.view.get_surface(), self.updating)
+                self.view.buttonRefresh.disable_enable(self.view.get_surface(), self.updating)
+                self.view.buttonNext.disable_enable(self.view.get_surface(), self.updating)
             if self.view.buttonRefresh.collide(self.mouse) and not self.updating:
                 self.model.set_initial_position()
                 self.view.draw_cells(self.model.grid, numpy.ndindex(self.model.grid.shape))
             if self.view.buttonNext.collide(self.mouse) and not self.updating:
                 self.model.update()
                 self.view.draw_cells(self.model.grid, numpy.ndindex(self.model.grid.shape))
-
 
     def __quit(self):
         self.view.quit()

@@ -6,8 +6,8 @@ class Model:
     def __init__(self, cells_amount_x, cells_amount_y):
         self.cells_amount_x = cells_amount_x
         self.cells_amount_y = cells_amount_y
+        self.grid = None
         self.set_initial_position()
-
 
     def set_initial_position(self):
         self.grid = numpy.zeros((self.cells_amount_y, self.cells_amount_x))
@@ -18,7 +18,6 @@ class Model:
         self.grid[pos[0]:pos[0]+start_pattern.shape[0], pos[1]:pos[1]+start_pattern.shape[1]] = start_pattern
         pos = (10, 10)
         self.grid[pos[0]:pos[0]+start_pattern.shape[0], pos[1]:pos[1]+start_pattern.shape[1]] = start_pattern
-
 
     def update(self):
         new_grid = numpy.zeros((self.grid.shape[0], self.grid.shape[1]))

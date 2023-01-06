@@ -1,10 +1,9 @@
-from typing import Tuple
 import pygame
 
 
 class Button:
 
-    def __init__(self, x, y, size, colors: Tuple[Tuple[int, int, int]], icon, backup_icon=""):
+    def __init__(self, x, y, size, colors, icon, backup_icon=""):
         self.x = x
         self.y = y
         self.size = size
@@ -25,13 +24,13 @@ class Button:
 
     def switch(self, surface, switched=False):
         self.__draw_background(surface)
-        if (switched and self.backup_icon):
+        if switched and self.backup_icon:
             surface.blit(self.backup_icon, (self.x, self.y))
         else:
             surface.blit(self.icon, (self.x, self.y))
 
-    def disableEnable(self, surface, disabled):
-        if (disabled):
+    def disable_enable(self, surface, disabled):
+        if disabled:
             cover = pygame.Surface((self.size, self.size))
             cover.set_alpha(100)
             cover.fill((0, 0, 0))
